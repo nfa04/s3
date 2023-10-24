@@ -22,7 +22,7 @@ const server = new Server(httpsServer, {
 
 const CassandraClient = new Client(config['cassandra']);
 
-var mysql = require('mysql');
+var mysql = require('mysql2');
 
 var MysqlConnection = mysql.createConnection(config['mysql']);
 
@@ -230,6 +230,7 @@ server.on("connection", (socket) => {
   });
 
   socket.on("cmfetch", (chatID, complete) => {
+    // Check if the chat exists
     MysqlConnection.query("SELECT * FROM chats WHERE chat_id=?;", [
       chatID
     ], (err, res) => {
@@ -277,32 +278,6 @@ server.on("connection", (socket) => {
         });
       }
     });
-  });
-
-  socket.on("call", (data) => {
-    MysqlConnection.query("SELECT name FROM chats WHERE chat_id=?", [data['chatID']], (err, res) => {
-      console.log(err);
-      if(err === null) {
-        console.log("chatName fetched", res[0]);
-        socket.to("u:" + data['user']).emit("call", {
-          offer: data['desc'],
-          caller: socket.handshake.auth['userID'],
-          chatID: data['chatID'],
-          type: data['type'],
-          chatName: res[0]['name']
-        });
-      }
-    });
-  });
-  
-  socket.on("call_ans", data => {
-    data['caller'] = socket.handshake.auth['userID'];
-    socket.to("u:" + data['user']).emit("call_ans", data);
-  });
-
-  socket.on("ice", data => {
-    data['caller'] = socket.handshake.auth['userID'];
-    socket.to("u:" + data['user']).emit("ice", data);
   });
 
 });
