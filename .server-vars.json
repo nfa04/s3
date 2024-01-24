@@ -1,0 +1,20 @@
+{
+        "corsAllow": "THE URL OF YOUR MAIN COMPONENT TO MAKE SURE CONENCTIONS ARE POSSIBLE",
+        "cassandra": {
+          "cloud": {
+                "secureConnectBundle": "../secure-connect-studezy-messenger.zip"
+          },
+          "credentials": {
+                  "username": "YOUR APACHE CASSANDRA USER",
+                  "password": "YOUR APACHE CASSANDRA PASSWORD"
+          }
+        },
+        "mysql": {
+          "host": "HOST WHICH YOUR MYSQL DATABASE RUNS UNDER",
+          "port": THE PORT ON WHICH MYSQL RUNS, THIS WILL BE 3306 BY DEFAULT,
+          "user":"YOUR MYSQL USER",
+          "password": "YOUR MYSQL DATABASE PASSWORD",
+          "database" : "NAME OF THE DATABASE"
+        },
+        "vapid":   ["mailto:YOUR EMAIL", "VAPID PUBLIC KEY",  "VAPID PRIVATE KEY"]
+}
